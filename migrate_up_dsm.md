@@ -1,5 +1,7 @@
 # **Upgrading IBM Data Server Manager \(DSM\)** {#migrate_up_dsm .task}
 
+**Reviewers:** This file is brand new as of Aug 14 and not yet reviewed.
+
 As the final step in an IOP to HDP Big SQL migration, you must upgrade the IBM DSM.
 
 If you are performing this step as part of a migration, you must follow all the preceding steps described in [Migrating from IOP to HDP](migrate_process.md#).
