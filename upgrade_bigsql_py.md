@@ -4,9 +4,23 @@ Allows you to Backup, Upgrade, Finalize, or Restore a Big SQL installation.
 
 ## Authorization { .section}
 
-To run this utility, you must be logged on as the configured bigsql service user.
+You must run this utility as root; you must either be logged on as the root user or use the sudo command.
 
 ## Prerequisites { .section}
+
+The following are prerequisites for running the bigsql\_upgrade.py command:
+
+-   To upgrade Big SQL, you must have a user with the following attributes:
+
+    -   passwordless sudo access on all nodes of the cluster, including the Ambari server itself.
+    -   The ability to connect passwordlessly through ssh from the Ambari server to all Big SQL nodes.
+    This user can be root. If the user is not root, the user name must be passed to the upgrade script with the -a option. The upgrade script must be run with root user privilege. This can be achieved by using the sudo command. If you have configured Ambari for non-root access \(see [Configuring Ambari for non-root access](inst_non_root.md#)\), use the -a option with the user name created for that purpose.
+
+-   The HDFS, Hive, and HBase services \(and the services they depend on\) must be running for you to perform the Big SQL upgrade. HDFS should not be running in safe mode.
+-   Big SQL installation requires about 2 GB of free disk space on the /usr partition. The upgrade process requires about 4 GB of free disk space on the root partition. This space is used temporarily by the upgrade process. It is released when the upgrade is complete.
+-   You must disable all Big SQL high availability before performing an upgrade.
+-   Ambari configuration groups are not supported. The upgrade script produces a warning message if you use configuration groups. If you override the warning, you must validate that the configuration of all nodes in all configuration groups is updated as part of the upgrade. It is recommended that you remove all configuration groups before performing an upgrade.
+-   You must disable Yarn and Slider support for Big SQL before performing an upgrade.
 
 ## Command parameters { .section}
 
@@ -62,12 +76,12 @@ To run this utility, you must be logged on as the configured bigsql service user
 
 **Upgrade is supported with the following limitations**:
 
--   Big SQL high availability clusters. You must disable high availability before performing an upgrade.
+-   Big SQL high availability clusters. You must disable Big SQL high availability before performing an upgrade.
 -   Ambari configuration groups are not supported. The upgrade script produces a warning message if you use configuration groups. If you override the warning,  you must validate that the configuration of all nodes in all configuration groups is updated as part of the upgrade. It is recommended that you remove all configuration groups before you run the upgrade.
 -   You cannot upgrade through the Ambari dashboard; it is a command-line upgrade only.
 -   Big SQL Yarn & Slider support. You must disable Yarn & Slider support for Big SQL before performing an upgrade.
 
-**Note:** During the Big SQL upgrade process, the state of the Big SQL service may be reported incorrectly in the Apache Ambari server web interface. In particular, Ambari may display the Big SQL service is down while it is actually running. The service actions are available but do not work. This is expected behavior. Operations return to normal after the upgrade is complete. We recommend you use the command line interface \(CLI\) rather than the Ambari UI to interact with the Big SQL service until the upgrade is completed.
+**Note:** During the Big SQL migration process, BigSQL is fully removed from Ambari during most of the migration until the finalize step, discussed in [Upgrading and finalizing Big SQL](migrate_up_bigsql.md#). You can not interact with BigSQL through Ambari \(whether the web UI or REST API\).
 
 **If you perfom an offline upgrade**, make sure that the repoinfo.xml file is updated. If you upgrade from version 4.1.0.2 to version 4.2.2, make sure that the source and the target versions of the repo information are present in the file. Use the following example as a guide to what the file might look like:
 
@@ -110,7 +124,7 @@ Run the 'Backup' phase of the Big SQL service upgrade process on your cluster:
 
 ```
 
-/usr/ibmpacks/scripts/5.0.1.0/upgrade/BIGSQL/bigsql_upgrade.py -m 
+/usr/ibmpacks/scripts/5.0.1.0/upgrade/BIGSQL/bigsql_upgrade.py 
    -u ambadmin -p ambpassword -s https -P 9443 -a ssh_user -m Backup
 ```
 

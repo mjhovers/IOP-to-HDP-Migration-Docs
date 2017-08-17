@@ -1,6 +1,6 @@
 # Removing deprecated components and services {#clean_components .task}
 
-When you remove components or services, make sure that there are no remaining files that might cause problems for future installations.
+Provides the steps required to remove the deprecated components and services which are not supported by Hortonworks Data Platform \(HDP\).
 
 You must stop and remove all the deprecated services and components from the Ambari server.
 
@@ -20,13 +20,13 @@ You must stop and remove all the deprecated services and components from the Amb
         
         ```
 
-2.  **Remove the TITAN, SOLR, JNBG \(if present\), SYSTEMML, and R4ML \(if present\) services** \(in that order\). To remove a component, follow these steps:
+2.  **Remove the TITAN, SOLR, JNBG, SYSTEMML and R4ML services in order** \(if present\). To remove a component, follow these steps:
 
     1.  In Ambari, select the service \(for example, TITAN\) in the **Services** list.
     2.  Select **Service Actions** \> **Stop** to stop the service.
     3.  Select **Service Actions** \> **Delete** to delete the service.
-    Repeat this process for all listed services on your system in the order given above.
+    Repeat this process for all the services listed above.
 
 
-The next step in the migration process is to upgrade from IOP to HDP. See **\[HWX REFERENCE\]** for details.
+The next step in the migration process is to migrate from IOP to HDP. See **\[HWX REFERENCE\]** for details.
 

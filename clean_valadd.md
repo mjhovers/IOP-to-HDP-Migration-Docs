@@ -1,10 +1,10 @@
-# Cleaning up IBM IOP value-add services {#task_r5h_kdq_5r .task}
+# Cleaning up IBM value-add services {#task_r5h_kdq_5r .task}
 
-This topic describes how to remove IBM IOP value-added services \(such as Text Analytic\) from your system as part of a migration.
+This topic describes how to remove IBM value-added services \(such as Text Analytic\) from your system as part of a migration.
 
 These clean-up processes do not remove the Ambari server, nor do they impact any of the configurations. The scripts will remove the top-level value-add RPMs. The value-add components you might see include:
 
--   Text Analytic \(component name: TEXTANALYTICS\)
+-   Text Analytics \(component name: TEXTANALYTICS\)
 -   BigInsights Home \(component name: WEBUIFRAMEWORK\)
 -   BigSheets \(component name: BIGSHEETS\)
 -   Big R \(component name: BIGR\)
@@ -45,43 +45,8 @@ remove_value_add_services.sh
     ```
 
 |
-    |**Assembly cleanup**|    ```
-
-remove_value_add_services_and_assembly.sh 
-  -A  <this is required>
-  -u <AMBARI_ADMIN_USERNAME> 
-  -p <AMBARI_ADMIN_PASSWORD> 
-  -x <AMBARI_PORT>    
-  -q
-  -l  
-  -c <RUN_AS_USER>
-  -f
-  
-    ```
-
-|
-    |**Service and assembly cleanup**|    ```
-
-remove_value_add_services_and_assembly.sh 
-  -u <AMBARI_ADMIN_USERNAME> 
-  -p <AMBARI_ADMIN_PASSWORD> 
-  -x <AMBARI_PORT>   
-  -a <STOPSERVICECOUNT> 
-  -b <REMOVESERVICECOUNT>
-  -q 
-  -r 
-  -l  
-  -c <RUN_AS_USER>
-  -f
- 
-    ```
-
-|
 
     Use the following parameter definitions:
-
-    -A
-    :   This option is mandatory when performing assembly only removal by using the remove\_value\_add\_services\_assembly.sh script.
 
     -u
     :   The Ambari administrator user name.
@@ -93,7 +58,7 @@ remove_value_add_services_and_assembly.sh
     :   The Ambari server port number.
 
     -s
-    :   Depending on the script that you run, the service to remove, or the service assembly to remove. The following values are allowed:
+    :   The service to remove. The following values are allowed:
 
         Service
         :   -   TEXTANALYTICS
@@ -107,7 +72,7 @@ remove_value_add_services_and_assembly.sh
         **Warning:** This might result in an Ambari unknown service state.
 
     -q
-    :   This option is optional. If removing a service, the parameter specifies to remove stack files that are associated with the service. If removing assembly, the parameter specifies to remove the yum repo and the cache.
+    :   This option is optional. If removing a service, the parameter specifies to remove stack files that are associated with the service.
 
         **Warning:** When running the remove service script, this option prevents a reinstallation.
 
@@ -169,120 +134,5 @@ Run as non-root user
       -r  -c biadmin
     ```
 
-Assembly cleanup examples:
-:   Normal removal
-:   Remove the assembly with repo clear:
-
-    ```
-    >sudo remove_value_add_services_and_assembly.sh 
-      -A  -u admin -p admin -x 8081
-    ```
-
-Removal with repo clean:
-:   Remove the assembly with repo clean:
-
-    ```
-    >sudo remove_value_add_services_and_assembly.sh 
-      -A -u admin -p admin -x 8081 -q
-    ```
-
-Run with repo clean and non root user:
-:   Remove the Data Scientist assembly and run as user biadmin:
-
-    ```
-    >sudo remove_value_add_services_and_assembly.sh 
-      -A -u admin -p admin -x 8081 -q -c biadmin
-    ```
-
-Service and assembly cleanup examples:
-:   Normal removal
-:   Removal all:
-
-    ```
-    >sudo remove_value_add_services_and_assembly.sh 
-      -u admin -p admin -x 8081
-    
-    ```
-
-:   Removal the Analyst services and assembly:
-
-    ```
-    >sudo remove_value_add_services_and_assembly.sh 
-      -u admin -p admin -x 8081 
-    ```
-
-Removal including users
-:   Remove all services and assemblies and users:
-
-    ```
-    >sudo remove_value_add_services_and_assembly.sh 
-      -u admin -p admin -x 8081 -r
-    ```
-
-Run as non-root user
-:   Remove all and run as user biadmin:
-
-    ```
-    >sudo remove_value_add_services_and_assembly.sh 
-      -u admin -p admin -x 8081  -r  -c biadmin
-    ```
-
-Removal with repo clean and non-root user and removing service users
-:   Removing the Data Scientist service and assemblies and running as user biadmin:
-
-    ```
-    >sudo remove_value_add_assembly.sh 
-      -u admin -p admin -x 8081 -r -q -c biadmin
-    ```
-
-./remove\_value\_add\_services\_and\_assembly.sh
-:   The usage is given as:
-
-    ```
-    
-    ./remove_value_add_services_and_assembly.sh 
-    -u <Ambari UI username> -p <Ambari UI password> [-x <Ambari server port number> -a <stop service attempts> -b <remove service attempts> -q -r -A]
-    ```
-
-    Required Parameters:
-
-    -u <username\>
-    :   Ambari UI username.
-
-    -p <password\>
-    :   Ambari UI password.
-
-    Optional Parameters:
-
-    -x <number\>
-    :   Port number for the Ambari server \(can be read automatically\)
-
-    -a <number\>
-    :   Number of times to re-attempt removing services from Ambari.
-
-    -b <number\>
-    :   Number of times to re-attempt removing services from Ambari.
-
-    -f
-    :   Force.
-
-    -q
-    :   Remove YUM repo cleaning.
-
-    -r
-    :   Remove service users.
-
-    -l
-    :   Connect to Ambari using HTTPS.
-
-    -A
-    :   Assembly cleanup only \(use if services have already been removed\).
-
-    **Examples**:
-
-    ```
-    remove_value_add_services_and_assembly.sh -u admin -p admin
-    remove_value_add_services_and_assembly.sh -u admin -p admin -x 8081 -a 5 -b 10
-    for secure Ambari servers(https): remove_value_add_services_and_assembly.sh -u admin -p admin -x 8443 -l
-    ```
+The next step in the migration process is to remove deprecated components and services. See [Removing deprecated components and services](clean_components.md#) for details.
 
