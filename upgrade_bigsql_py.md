@@ -83,29 +83,40 @@ The following are prerequisites for running the bigsql\_upgrade.py command:
 
 **Note:** During the Big SQL migration process, BigSQL is fully removed from Ambari during most of the migration until the finalize step, discussed in [Upgrading and finalizing Big SQL](migrate_up_bigsql.md#). You can not interact with BigSQL through Ambari \(whether the web UI or REST API\).
 
-**If you perfom an offline upgrade**, make sure that the repoinfo.xml file is updated. If you upgrade from version 4.1.0.2 to version 4.2.2, make sure that the source and the target versions of the repo information are present in the file. Use the following example as a guide to what the file might look like:
+**If you perfom an offline upgrade**, make sure that the var/lib/ambari-server/resources/extensions/IBM-Big\_SQL/5.0.1.0/services/BIGSQL/repos/repoinfo.xml file is updated. If you upgrade from version 4.1.0.2 to version 4.2.2, make sure that the source and the target versions of the repo information are present in the file. Use the following example as a guide to what the file might look like:
 
 ```
-
-<reposinfo>  
-<mainrepoid>IOP-4.2</mainrepoid>  
+<?xml version="1.0"?>
+<reposinfo>
+<mainrepoid>IBM-Big_SQL</mainrepoid>
 <os family="redhat6">
-  <repo>
-    <baseurl>http://birepo-build.svl.ibm.com/repos/IOP/RHEL6/x86_64/4.2/20160401_0401</baseurl>
-    <repoid>IOP-4.2</repoid>
-      <reponame>IOP</reponame>
-  </repo>
-  <repo>
-    <baseurl>http://birepo-build.svl.ibm.com/repos/IOP-UTILS/RHEL6/x86_64/1.1</baseurl>
-    <repoid>IOP-UTILS-1.1</repoid>
-      <reponame>IOP-UTILS</reponame>
-  </repo>
-  <repo>
-    <baseurl>http://birepo-build.svl.ibm.com/repos/BigInsights-Valuepacks/RHEL6/x86_64/4.2.0.0/DEV/20160419_1025</baseurl>
-    <repoid>BIGINSIGHTS-VALUEPACK-1.2.0.0</repoid>
-    <reponame>BIGINSIGHTS-VALUEPACK-1.2.0.0</reponame>
-   </repo>
-  </os>
+<repo>
+<baseurl>http://birepo-build.svl.ibm.com/repos/BigSQL/RHEL7/x86_64/5.0.1.0/MAINT/20170816_1730</baseurl>
+<repoid>IBM-Big_SQL-5_0_1_0</repoid>
+<reponame>IBM-Big_SQL-5_0_1_0</reponame>
+</repo>
+</os>
+<os family="redhat7">
+<repo>
+<baseurl>http://birepo-build.svl.ibm.com/repos/BigSQL/RHEL7/x86_64/5.0.1.0/MAINT/20170816_1730</baseurl>
+<repoid>IBM-Big_SQL-5_0_1_0</repoid>
+<reponame>IBM-Big_SQL-5_0_1_0</reponame>
+</repo>
+</os>
+<os family="redhat-ppc7">
+<repo>
+<baseurl>http://birepo-build.svl.ibm.com/repos/BigSQL/RHEL7/x86_64/5.0.1.0/MAINT/20170816_1730</baseurl>
+<repoid>IBM-Big_SQL-5_0_1_0</repoid>
+<reponame>IBM-Big_SQL-5_0_1_0</reponame>
+</repo>
+</os>
+<os family="suse11">
+<repo>
+<baseurl>http://birepo-build.svl.ibm.com/repos/BigSQL/RHEL7/x86_64/5.0.1.0/MAINT/20170816_1730</baseurl>
+<repoid>IBM-Big_SQL-5_0_1_0</repoid>
+<reponame>IBM-Big_SQL-5_0_1_0</reponame>
+</repo>
+</os>
 </reposinfo>
 ```
 

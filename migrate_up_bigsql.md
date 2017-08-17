@@ -4,7 +4,9 @@ As a step in an IOP to HDP Big SQL migration, you must upgrade and finalize your
 
 If you are performing this step as part of a migration, you must follow all the preceding steps described in [Migrating from IOP to HDP](migrate_process.md#).
 
-If you are upgrading Big SQL in a non-root installation environment, you must follow the steps in [migrate\_prep\_non\_root.md\#](migrate_prep_non_root.md#).
+The HDFS, Hive, and HBase services \(and the services they depend on\) must be running for you to perform the Big SQL upgrade. HDFS should not be running in safe mode.
+
+If you are upgrading Big SQL in a non-root installation environment, you must follow the steps in [hdp\_ambari\_non\_root\_access\_bigsql.md\#](hdp_ambari_non_root_access_bigsql.md#).
 
 This topic describes how to upgrade and finalize your version of Big SQL.
 
@@ -20,7 +22,8 @@ This topic describes how to upgrade and finalize your version of Big SQL.
 
     ```
     db2set DBCOMM=
-    restart Big SQL service.
+    /usr/ibmpacks/current/bigsql/bigsql/bin/bigsql stop
+    /usr/ibmpacks/current/bigsql/bigsql/bin/bigsql start
     ```
 
 3.  Stop db2 level auditing of Big SQL.Login to the headnode as the Big SQL user and issue the following commands to stop auditing:
@@ -46,7 +49,7 @@ This topic describes how to upgrade and finalize your version of Big SQL.
     python /usr/ibmpacks/scripts/5.0.1.0/upgrade/bigsql_upgrade.py -m Upgrade
     ```
 
-    To perform the upgrade option of the Big SQL upgrade, run the bigsql\_upgrade.py script with the -m option and the value Upgrade. Include any additional options as documented in [bigsql\_upgrade.py - Big SQL upgrade utility](upgrade_bigsql_py.md#).
+    To perform the upgrade option of the Big SQL upgrade, run the bigsql\_upgrade.py script with the -m option and the value Upgrade. Include any additional options as documented in [bigsql\_upgrade.py - Big SQL upgrade utility](upgrade_bigsql_py.md#) For example, if you have configured Ambari for non-root access, you should use the -a option.
 
     When the Upgrade phase is complete, the Big SQL service is not visible in the Ambari dashboard. However, the new version of BigInisghts Big SQL is operational and running. It is possible to connect applications to the BigInisghts Big SQL server to run sanity tests before proceeding with the Finalize phase of the upgrade.
 
@@ -89,7 +92,7 @@ This topic describes how to upgrade and finalize your version of Big SQL.
     1.  Registers the Big SQL service in the Ambari dashboard.
     2.  Cleans up the binaries of the previous Big SQL version.
     3.  Cleans up the backups that were created during the backup phase.
-    To perform the finalize phase of the Big SQL upgrade, run the bigsql\_upgrade.py script with the -m option and the value Finalize. Include any additional options as documented in the [bigsql\_upgrade.py - Big SQL upgrade utility](upgrade_bigsql_py.md#).
+    To perform the finalize phase of the Big SQL upgrade, run the bigsql\_upgrade.py script with the -m option and the value Finalize. Include any additional options as documented in the [bigsql\_upgrade.py - Big SQL upgrade utility](upgrade_bigsql_py.md#). For example, if you have configured Ambari for non-root access, you should use the -a option.
 
     ```
     python /usr/ibmpacks/scripts/5.0.1.0/upgrade/bigsql_upgrade.py -m Finalize
@@ -103,7 +106,8 @@ This topic describes how to upgrade and finalize your version of Big SQL.
 
     ```
     db2set DB2COMM=TCPIP
-    restart BigSQL Service
+    /usr/ibmpacks/current/bigsql/bigsql/bin/bigsql stop
+    /usr/ibmpacks/current/bigsql/bigsql/bin/bigsql start
     ```
 
 

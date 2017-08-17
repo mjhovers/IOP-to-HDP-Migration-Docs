@@ -20,11 +20,15 @@ Unable to detect TEXTANALYTICS in Ambari. It may have already been removed.
 Would you like to continue cleanup? (Y/n) y
 ```
 
+**Important:** DO NOT remove Big SQL using the script described in this topic.
+
 1.  Navigate to the directory that contains the clean up scripts:
 
     ```
     cd /usr/ibmpacks/bin/<version>
     ```
+
+    **Note:** The <version\> numbers you see will start with 3.0, not 5.0.0.1.
 
 2.  The value-add services include scripts to help you remove the value-add services and to clean up your environment:
 
@@ -91,9 +95,7 @@ remove_value_add_services.sh
     -c
     :   This option is optional. Run as user if a non-root user is installed.
 
-    **Note:**
-
-    For the Text Analytics service -TEXTANALYTICS- if an existing MySQL database server was used during install, then delete the database manually from the server after running the removal script:
+    **Note:** For the Text Analytics service -TEXTANALYTICS- if an existing MySQL database server was used during install, then delete the database manually from the server after running the removal script:
 
     `mysql> drop database tawebtoolingdb;`
 
@@ -113,7 +115,7 @@ Service cleanup examples:
 :   Remove the BigR service:
 
     ```
-    >sudo remove_value_add_services.sh 
+    sudo remove_value_add_services.sh 
       -u admin -p admin -x 8081 BIGR
     ```
 
@@ -121,7 +123,7 @@ Removal including users
 :   Remove the Big R service including the users:
 
     ```
-    >sudo remove_value_add_services.sh 
+    sudo remove_value_add_services.sh 
       -u admin -p admin -x 8081 BIGR -r
     ```
 
@@ -129,7 +131,7 @@ Run as non-root user
 :   Remove the Big R service as non-root user \(with sudo privilege\) biadmin:
 
     ```
-    >sudo remove_value_add_services.sh 
+    sudo remove_value_add_services.sh 
       -u admin -p admin -x 8081 BIGR 
       -r  -c biadmin
     ```
